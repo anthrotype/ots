@@ -8,10 +8,14 @@ git:
   submodules: false
 
 before_install:
+  - test "$CXX" = "g++" && sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y || true # for new GCC
   - sudo apt-get update -qq
   - sudo apt-get install -qq ^fonts-.*[^0]$ # install font package for testsing
   - sudo apt-get purge -qq fonts-{linuxlibertine,arphic-{ukai,uming},nanum-extra} # these are buggy
+  - test "$CXX" = "g++"  && sudo apt-get install -qq g++-4.8 || true
 
-install: ./autogen.sh
+install:
+  - test "$CXX" = "g++" && export CXX="g++-4.8" CC="gcc-4.8" || true
+  - ./autogen.sh
 
 script: ./configure && make check
