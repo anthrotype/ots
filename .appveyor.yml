@@ -17,7 +17,7 @@ build_script:
 
 artifacts:
   # Archive the generated files in the ci.appveyor.com build report.
-  - path: build\*
+  - path: build\bin\*
 
 # disable automatic tests
 test: off
