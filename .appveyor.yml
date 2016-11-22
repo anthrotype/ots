@@ -12,7 +12,12 @@ install:
 build_script:
   - set CC=./cccl
   - set CXX=./cccl
-  - bash -c "exec 0</dev/null; ./autogen.sh; ./configure --with-zlib=zlib; make CXXFLAGS='-D_HAS_EXCEPTIONS=0 -D_STATIC_CPPLIB'"
+  - mkdir build
+  - bash -c "exec 0</dev/null; ./autogen.sh; ./configure --prefix=build --with-zlib=zlib; make CXXFLAGS='-D_HAS_EXCEPTIONS=0 -D_STATIC_CPPLIB'; make install"
+
+artifacts:
+  # Archive the generated files in the ci.appveyor.com build report.
+  - path: build\*
 
 # disable automatic tests
 test: off
